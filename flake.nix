@@ -25,7 +25,7 @@
           helium =
             let
               pname = "helium";
-              version = "0.7.6.1";
+              version = "0.7.7.1";
             in
             pkgs.stdenv.mkDerivation {
               inherit pname version;
@@ -36,9 +36,9 @@
                 }_linux.tar.xz";
                 sha256 =
                   if system == "aarch64-linux" then
-                    "sha256-tkqUGCSBcUEpLrAlbJ9AtwjYSwcBchx/p5acBrp6Wrk="
+                    "sha256-76hJ19/bHzdE1//keGF9imYkMHOy6VHpA56bxEkgwgA="
                   else
-                    "sha256-RL0MMsYmcboZt7aq2R/6onLX1bTxlEbhlwB7yBb84os=";
+                    "sha256-aY9GwIDPTcskm55NluSyxkCHC6drd6BdBaNYZhrzlRE=";
               };
 
               nativeBuildInputs = [
