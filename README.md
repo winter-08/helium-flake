@@ -64,18 +64,18 @@ To update to a new Helium release:
 1. Check the [latest release](https://github.com/imputnet/helium-linux/releases) and update the version in `flake.nix`:
 
    ```nix
-   version = "0.6.4.1";  # Update this
+   version = "0.8.2.1";  # Update this
    ```
 
 2. Fetch the new hashes for both architectures:
 
    ```bash
    # x86_64
-   nix-prefetch-url https://github.com/imputnet/helium-linux/releases/download/0.6.4.1/helium-0.6.4.1-x86_64_linux.tar.xz
+   nix-prefetch-url https://github.com/imputnet/helium-linux/releases/download/0.8.2.1/helium-0.8.2.1-x86_64_linux.tar.xz
    nix hash convert --hash-algo sha256 <hash-from-above>
 
    # aarch64
-   nix-prefetch-url https://github.com/imputnet/helium-linux/releases/download/0.6.4.1/helium-0.6.4.1-arm64_linux.tar.xz
+   nix-prefetch-url https://github.com/imputnet/helium-linux/releases/download/0.8.2.1/helium-0.8.2.1-arm64_linux.tar.xz
    nix hash convert --hash-algo sha256 <hash-from-above>
    ```
 

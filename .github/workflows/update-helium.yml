@@ -1,0 +1,37 @@
+name: Update Helium
+
+on:
+  schedule:
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@v25
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Set up Nix cache
+        uses: nix-community/cache-nix-action@v6
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+      - name: Update flake
+        run: |
+          nix shell nixpkgs#curl nixpkgs#jq nixpkgs#perl -c \
+            bash scripts/update-helium.sh
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "update: helium release"
+          title: "Update Helium release"
+          body: "Automated update to the latest Helium release."
+          branch: "automation/update-helium"

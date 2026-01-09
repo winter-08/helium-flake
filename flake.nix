@@ -25,7 +25,7 @@
           isAarch64 = stdenv.hostPlatform.isAarch64;
 
           pname = "helium";
-          version = "0.7.4.1";
+          version = "0.8.2.1";
           arch = if isAarch64 then "arm64" else "x86_64";
         in
         {
@@ -36,7 +36,11 @@
 
                 src = pkgs.fetchurl {
                   url = "https://github.com/imputnet/helium-macos/releases/download/${version}/${pname}_${version}_${arch}-macos.dmg";
-                  sha256 = "sha256-9EEECuaiALU/LzdkrjllgUN+cHcxkDvPgyc52nouFrw=";
+                  sha256 =
+                    if isAarch64 then
+                      "sha256-Y42Fj+5KPZ2aO7XazV1CFB7liAmWSsafcXpvukJRqoM="
+                    else
+                      "sha256-uDrsOxCo+FA/K3Ny+ycrjSClQ5gmu50K+9RC+td6yAE=";
                 };
 
                 dontUnpack = true;
@@ -72,9 +76,9 @@
                   url = "https://github.com/imputnet/helium-linux/releases/download/${version}/${pname}-${version}-${arch}_linux.tar.xz";
                   sha256 =
                     if isAarch64 then
-                      "sha256-PuZK4RiNTe5NuXskd/SmgMU6imBNec/Rks8r2uegWtc="
+                      "sha256-ymEQnVCAZN9SXIcVLEt6kNkkZ7USY0qBI9M1HsBkrrU="
                     else
-                      "sha256-0azvPplorlQcEJq8saMllxGrQiBJBgnEdHmqTSReUt8=";
+                      "sha256-hljL7KlafD1TYPmA+U8HRdXKOUdsb6Lnk4XiAYfmPI8=";
                 };
 
                 nativeBuildInputs = [
@@ -135,8 +139,6 @@
 
                   mkdir -p $out/share/applications
                   cp $out/opt/helium/helium.desktop $out/share/applications/
-                  substituteInPlace $out/share/applications/helium.desktop \
-                    --replace-fail 'chromium' 'helium'
 
                   mkdir -p $out/share/pixmaps
                   cp $out/opt/helium/product_logo_256.png $out/share/pixmaps/helium.png
