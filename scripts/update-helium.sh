@@ -33,7 +33,11 @@ digest_sri() {
     exit 1
   fi
 
-  nix hash convert --hash-algo sha256 "${digest#sha256:}"
+  if nix hash convert --help >/dev/null 2>&1; then
+    nix hash convert --hash-algo sha256 "${digest#sha256:}"
+  else
+    nix hash to-sri --type sha256 "${digest#sha256:}"
+  fi
 }
 
 linux_arm="$(digest_sri "$linux_json" "helium-${version}-arm64_linux.tar.xz")"
@@ -41,7 +45,7 @@ linux_x86="$(digest_sri "$linux_json" "helium-${version}-x86_64_linux.tar.xz")"
 mac_arm="$(digest_sri "$mac_json" "helium_${version}_arm64-macos.dmg")"
 mac_x86="$(digest_sri "$mac_json" "helium_${version}_x86_64-macos.dmg")"
 
-perl -0pi -e 'my $c = s/(version = ")[^"]+(")/$1'"$version"'$2/s; die "error: version not updated\n" if $c != 1;' \
+VERSION="$version" perl -0pi -e 'my $v = $ENV{VERSION}; my $c = s/(version = ")[^"]+(")/$1$v$2/s; die "error: version not updated\n" if $c != 1;' \
   flake.nix
 
 update_hash_block() {
@@ -54,12 +58,12 @@ update_hash_block() {
     my $arm = $ENV{ARM};
     my $x86 = $ENV{X86};
     my $pattern = qr{
-      (url = "https://github.com/imputnet/\Q$repo\E[^"]+";\n)
-      (\s+)sha256 =\n
-      \2  if isAarch64 then\n
-      \2    "sha256-[^"]+"\n
-      \2  else\n
-      \2    "sha256-[^"]+";
+      (url\h*=\h*"https://github.com/imputnet/\Q$repo\E[^"]+";\n)
+      (\h+)sha256\h*=\n
+      \2\h+if\h+isAarch64\h+then\n
+      \2\h+"sha256-[^"]+"\n
+      \2\h+else\n
+      \2\h+"sha256-[^"]+";
     }xs;
     my $c = s/$pattern/${1}${2}sha256 =\n$2  if isAarch64 then\n$2    "$arm"\n$2  else\n$2    "$x86";/s;
     die "error: missing hash block for $repo\n" if $c != 1;

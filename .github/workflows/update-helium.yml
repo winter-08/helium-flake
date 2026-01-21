@@ -20,6 +20,7 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
       - name: Set up Nix cache
+        if: ${{ env.ACT != 'true' }}
         uses: nix-community/cache-nix-action@v6
         with:
           primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
@@ -29,8 +30,10 @@ jobs:
           nix shell nixpkgs#curl nixpkgs#jq nixpkgs#perl -c \
             bash scripts/update-helium.sh
       - name: Create pull request
+        if: ${{ env.ACT != 'true' }}
         uses: peter-evans/create-pull-request@v6
         with:
+          base: ${{ github.event.repository.default_branch }}
           commit-message: "update: helium release"
           title: "Update Helium release"
           body: "Automated update to the latest Helium release."
