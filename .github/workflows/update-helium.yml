@@ -22,7 +22,7 @@ jobs:
       - name: Set up Nix cache
         uses: nix-community/cache-nix-action@v6
         with:
-          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('**/flake.lock') || 'no-lock' }}
           restore-prefixes-first-match: nix-${{ runner.os }}-
       - name: Update flake
         run: |
