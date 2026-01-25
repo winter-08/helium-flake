@@ -25,7 +25,7 @@
           isAarch64 = stdenv.hostPlatform.isAarch64;
 
           pname = "helium";
-          version = "0.8.2.1";
+          version = "0.8.3.1";
           arch = if isAarch64 then "arm64" else "x86_64";
         in
         {
@@ -38,9 +38,9 @@
                   url = "https://github.com/imputnet/helium-macos/releases/download/${version}/${pname}_${version}_${arch}-macos.dmg";
                   sha256 =
                     if isAarch64 then
-                      "sha256-Y42Fj+5KPZ2aO7XazV1CFB7liAmWSsafcXpvukJRqoM="
+                      "sha256-5DKOByUwqLIdNO1U2OHY5tHivAwbYzFOaYO7wcy/QfI="
                     else
-                      "sha256-uDrsOxCo+FA/K3Ny+ycrjSClQ5gmu50K+9RC+td6yAE=";
+                      "sha256-T0ktNMm3U5+6jXtaF+94KQip04YCUt7+JT3bqWRQ6zY=";
                 };
 
                 dontUnpack = true;
@@ -76,9 +76,9 @@
                   url = "https://github.com/imputnet/helium-linux/releases/download/${version}/${pname}-${version}-${arch}_linux.tar.xz";
                   sha256 =
                     if isAarch64 then
-                      "sha256-ymEQnVCAZN9SXIcVLEt6kNkkZ7USY0qBI9M1HsBkrrU="
+                      "sha256-kWdjLBRe0jg1zvedtSnUarenuG6wK9WExZV6wW82xxo="
                     else
-                      "sha256-hljL7KlafD1TYPmA+U8HRdXKOUdsb6Lnk4XiAYfmPI8=";
+                      "sha256-WVeqX8FeOFnfzZDPWqdSAK8qb/CMKAKVAhglcfX/sCY=";
                 };
 
                 nativeBuildInputs = [
