@@ -129,7 +129,9 @@
                   mkdir -p $out/bin $out/opt/helium
                   cp -r ./* $out/opt/helium/
 
-                  makeWrapper $out/opt/helium/chrome-wrapper $out/bin/helium \
+                  chmod +x $out/opt/helium/helium-wrapper
+
+                  makeWrapper $out/opt/helium/helium-wrapper $out/bin/helium \
                     --prefix LD_LIBRARY_PATH : "${
                       lib.makeLibraryPath [
                         pkgs.libGL
