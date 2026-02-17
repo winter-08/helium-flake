@@ -1,0 +1,11 @@
+{
+  "version": "0.9.2.1",
+  "linuxHashes": {
+    "x86_64-linux": "006srgibangl7xjrhi6lvfl2rz00a37srm53iha4cfi8a7yfqcf0",
+    "aarch64-linux": "1yr91hcyb1fajz0wpx1xdyyxgxgidpsa4d0xkihlmsg27rb5xh5g"
+  },
+  "darwinHashes": {
+    "x86_64-darwin": "0m9147bgdg6a8fglrq7z5cfg4lzj8xi1cwsf56icc769f684hx58",
+    "aarch64-darwin": "1abjr5jwfc3ann0bdrnphfmi8imxaj3xv999n18jkzqp9fmw3mqf"
+  }
+}

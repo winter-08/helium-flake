@@ -16,17 +16,10 @@
       ];
       forAllSystems = lib.genAttrs platforms;
 
-      version = "0.8.5.1";
-
-      linuxHashes = {
-        "x86_64-linux" = "122jqg4bwrw2p8wcv0fzi74wkrz96k5z9z68qrz67hv2bg9pdjpx";
-        "aarch64-linux" = "0990rvqfmq1ja8vg45llbmwkgf9ayhpqlww0qqr9fc14kyarg89s";
-      };
-
-      darwinHashes = {
-        "x86_64-darwin" = "1yyibndrg3jysrrx9cvnivk9jwy1nigv2cf40lkn4s7cza19w2bq";
-        "aarch64-darwin" = "00nk99v15iwjxp91pbbbac97ddyva7d1mp15176zq7hkfi3m3fbs";
-      };
+      versionData = builtins.fromJSON (builtins.readFile ./helium-versions.json);
+      version = versionData.version;
+      linuxHashes = versionData.linuxHashes;
+      darwinHashes = versionData.darwinHashes;
 
       mkHeliumLinux =
         pkgs:
@@ -64,12 +57,12 @@
             libxcb
             libxkbcommon
             at-spi2-core
-            xorg.libX11
-            xorg.libXcomposite
-            xorg.libXdamage
-            xorg.libXext
-            xorg.libXfixes
-            xorg.libXrandr
+            libx11
+            libxcomposite
+            libxdamage
+            libxext
+            libxfixes
+            libxrandr
             mesa
             cairo
             pango
