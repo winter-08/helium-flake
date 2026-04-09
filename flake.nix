@@ -17,9 +17,10 @@
       forAllSystems = lib.genAttrs platforms;
 
       versionData = builtins.fromJSON (builtins.readFile ./helium-versions.json);
-      version = versionData.version;
-      linuxHashes = versionData.linuxHashes;
-      darwinHashes = versionData.darwinHashes;
+      linuxVersion = versionData.linux.version;
+      linuxHashes = versionData.linux.hashes;
+      darwinVersion = versionData.darwin.version;
+      darwinHashes = versionData.darwin.hashes;
 
       mkHeliumLinux =
         pkgs:
@@ -28,10 +29,10 @@
         in
         pkgs.stdenv.mkDerivation {
           pname = "helium";
-          inherit version;
+          version = linuxVersion;
 
           src = pkgs.fetchurl {
-            url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-${
+            url = "https://github.com/imputnet/helium-linux/releases/download/${linuxVersion}/helium-${linuxVersion}-${
               if system == "aarch64-linux" then "arm64" else "x86_64"
             }_linux.tar.xz";
             sha256 = linuxHashes.${system};
@@ -120,10 +121,10 @@
         in
         pkgs.stdenv.mkDerivation {
           pname = "helium";
-          inherit version;
+          version = darwinVersion;
 
           src = pkgs.fetchurl {
-            url = "https://github.com/imputnet/helium-macos/releases/download/${version}/helium_${version}_${
+            url = "https://github.com/imputnet/helium-macos/releases/download/${darwinVersion}/helium_${darwinVersion}_${
               if system == "aarch64-darwin" then "arm64" else "x86_64"
             }-macos.dmg";
             sha256 = darwinHashes.${system};

@@ -92,7 +92,7 @@ nix build
 
 ## Updating
 
-The Helium version gets automatically updated each Monday
+The Helium Linux and macOS release pins get automatically updated each Monday
 via a GitHub workflow.
 
 To manually update to the newest Helium release:
